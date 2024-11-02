@@ -1,5 +1,6 @@
 package com.dicoding.asclepius.view
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dicoding.asclepius.R
@@ -10,10 +11,15 @@ class ResultActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_result)
+        binding = ActivityResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // TODO: Menampilkan hasil gambar, prediksi, dan confidence score.
+        val imageUriString = intent.getStringExtra("imageUri")
+        val classificationResult = intent.getStringExtra("classificationResult")
+
+        val imageUri = imageUriString?.let { Uri.parse(it) }
+        binding.resultImage.setImageURI(imageUri)
+
+        binding.resultText.text = classificationResult ?: "ERROR TIDAK ADA GAMBAR!"
     }
-
-
 }
