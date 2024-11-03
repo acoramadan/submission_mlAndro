@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.view
+package com.dicoding.asclepius.ui.view
 
 import android.content.Intent
 import android.net.Uri
@@ -11,25 +11,27 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.dicoding.asclepius.databinding.ActivityMainBinding
-import com.dicoding.asclepius.viewmodel.MainViewModel
+import com.dicoding.asclepius.databinding.ActivityDetectionBinding
+import com.dicoding.asclepius.ui.viewmodel.MainViewModel
 import com.yalantis.ucrop.UCrop
 import java.io.File
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class DetectionActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityDetectionBinding
     private val viewModel: MainViewModel by viewModels()
     private var currentImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityDetectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.galleryButton.setOnClickListener {
             startGallery()
         }
-
+        binding.fab.setOnClickListener{
+            finish()
+        }
         binding.analyzeButton.setOnClickListener {
             analyzeImage()
         }
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri != null) {
-            startCrop(uri)  // Memulai uCrop setelah gambar dipilih
+            startCrop(uri)
         } else {
             Log.e("MainActivity", "Error Memunculkan galeri")
         }
@@ -54,12 +56,12 @@ class MainActivity : AppCompatActivity() {
     private fun startCrop(uri: Uri) {
         val destinationUri = Uri.fromFile(File(cacheDir, "cropped_image.jpg"))
         val options = UCrop.Options()
-        options.setFreeStyleCropEnabled(true)  // Mengaktifkan crop secara bebas
-        options.setCompressionQuality(100)  // Set kualitas gambar setelah crop
+        options.setFreeStyleCropEnabled(true)
+        options.setCompressionQuality(100)
 
         UCrop.of(uri, destinationUri)
-            .withAspectRatio(1f, 1f)  // Anda bisa menyesuaikan rasio ini
-            .withMaxResultSize(224, 224)  // Sesuaikan ukuran maksimal
+            .withAspectRatio(1f, 1f)
+            .withMaxResultSize(224, 224)
             .withOptions(options)
             .start(this)
     }
@@ -69,8 +71,8 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             val resultUri = UCrop.getOutput(data!!)
             currentImageUri = resultUri
-            showImage()  // Memastikan tampilan gambar diperbarui dengan hasil crop
-            viewModel.setImageUri(resultUri!!)  // Set URI pada ViewModel untuk klasifikasi
+            showImage()
+            viewModel.setImageUri(resultUri!!)
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(data!!)
             showToast("Crop error: ${cropError?.message}")
@@ -80,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     private fun showImage() {
         currentImageUri?.let {
             Log.d("Image URI", "showImage: $it")
-            binding.previewImageView.setImageURI(it)  // Update ImageView dengan URI terbaru
+            binding.previewImageView.setImageURI(it)
         }
     }
 
@@ -107,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.classificationResult.observe(this, Observer { result ->
             binding.progressIndicator.visibility = View.GONE
             result?.let {
-                moveToResult(it)  // Pindah ke ResultActivity dengan hasil klasifikasi
+                moveToResult(it)
             } ?: showToast("Gagal menganalisis gambar.")
         })
 

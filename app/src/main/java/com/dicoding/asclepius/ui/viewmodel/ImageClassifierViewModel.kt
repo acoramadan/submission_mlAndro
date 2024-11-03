@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.viewmodel
+package com.dicoding.asclepius.ui.viewmodel
 
 import android.content.Context
 import android.net.Uri
@@ -10,8 +10,8 @@ import org.tensorflow.lite.task.gms.vision.classifier.Classifications
 
 class ImageClassifierViewModel(context: Context) : ViewModel(), ImageClassifierHelper.ClassifierListener {
 
-    private val _classificationResults = MutableLiveData<List<Classifications>>()
-    val classificationResults: LiveData<List<Classifications>> = _classificationResults
+    private val _classificationResults = MutableLiveData<List<Classifications>?>()
+    val classificationResults: MutableLiveData<List<Classifications>?> = _classificationResults
 
     private val _inferenceTime = MutableLiveData<Long>()
     val inferenceTime: LiveData<Long> = _inferenceTime

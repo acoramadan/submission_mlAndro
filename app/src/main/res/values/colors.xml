@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primaryColor">#FFBA26</color>
+    <color name="cardColor">#FFEBD0</color>
+    <color name="secondaryColor">#A58D68</color>
+    <color name="tertiaryColor">#7A996D</color>
+    <color name="error">#7A996D</color>
+    <color name="success">#96D652</color>
 </resources>

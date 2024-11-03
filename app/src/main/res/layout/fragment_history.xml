@@ -3,12 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.HistoryFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context=".ui.view.fragments.HistoryFragment">
+<LinearLayout
+    android:id="@+id/vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/vertical_only"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:clipToPadding="false"
+        android:paddingTop="15dp"
+        android:paddingBottom="90dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="20dp"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:backgroundTint="@color/primaryColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        tools:visibility="visible" />
+</LinearLayout>
 </FrameLayout>

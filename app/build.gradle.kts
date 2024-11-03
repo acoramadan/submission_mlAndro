@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -47,6 +49,8 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-task-vision-play-services:0.4.2")
     implementation("org.tensorflow:tensorflow-lite-gpu:2.9.0")
     implementation("androidx.activity:activity:1.9.3")
+    implementation("com.google.android.ads:mediation-test-suite:3.0.0")
+    implementation("androidx.compose.ui:ui-desktop:1.7.0")
 
     //room
     val room_version = "2.6.1"
@@ -57,6 +61,15 @@ dependencies {
     //crop
     implementation("com.github.yalantis:ucrop:2.2.8")
 
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("androidx.fragment:fragment-ktx:1.3.6")
     implementation("androidx.activity:activity-ktx:1.9.3")
     implementation("androidx.core:core-ktx:1.12 .0")
     implementation("androidx.appcompat:appcompat:1.7.0")

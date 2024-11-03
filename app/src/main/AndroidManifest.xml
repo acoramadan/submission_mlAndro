@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,10 +13,13 @@
         android:theme="@style/Theme.Asclepius"
         tools:targetApi="31">
         <activity
-            android:name=".view.DetailHistoryActivity"
+            android:name=".ui.view.DetectionActivity"
             android:exported="false" />
         <activity
-            android:name=".view.DetailInformationActivity"
+            android:name=".ui.view.DetailHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.DetailInformationActivity"
             android:exported="false" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -24,10 +27,10 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             tools:ignore="DiscouragedApi" />
         <activity
-            android:name=".view.ResultActivity"
+            android:name=".ui.view.ResultActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,6 +38,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

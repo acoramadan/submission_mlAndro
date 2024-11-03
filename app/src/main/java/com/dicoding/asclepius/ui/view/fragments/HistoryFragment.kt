@@ -1,4 +1,4 @@
-package com.dicoding.asclepius.view.fragments
+package com.dicoding.asclepius.ui.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -19,8 +19,9 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_history, container, false)
+    ): View {
+        binding = FragmentHistoryBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
 }
