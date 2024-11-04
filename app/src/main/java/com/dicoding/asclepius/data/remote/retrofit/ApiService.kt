@@ -8,7 +8,6 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("top-headlines")
     suspend fun getCancerHealthNews(
-        @Query("q") query: String = "cancer",
         @Query("language") language: String = "en",
         @Query("category") category: String = "health",
         @Query("apiKey") apiKey: String

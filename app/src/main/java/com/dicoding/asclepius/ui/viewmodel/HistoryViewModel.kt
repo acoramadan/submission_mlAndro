@@ -17,9 +17,4 @@ class HistoryViewModel(private val repository: HistoryRepository) : ViewModel() 
         }
     }
 
-    fun delete(historyEntity: HistoryEntity) {
-        viewModelScope.launch {
-            repository.delete(historyEntity)
-        }
-    }
 }

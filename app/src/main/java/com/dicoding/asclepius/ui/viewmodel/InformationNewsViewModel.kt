@@ -1,3 +1,5 @@
+package com.dicoding.asclepius.ui.viewmodel
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,8 +26,15 @@ class InformationNewsViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val response = apiService.getCancerHealthNews(apiKey = apiKey)
-                if (response.isSuccessful) {
-                    _newsResponse.postValue(response.body())
+                if (response.isSuccessful && response.body() != null) {
+                    val articles = response.body()?.information?.filter { article ->
+                        article.title!!.isNotBlank() &&
+                            article.description!!.isNotBlank()
+                                && !article.title.contains("[Removed]", ignoreCase = true)
+                                && !article.description.contains("[Removed]", ignoreCase = true)
+                    } ?: emptyList()
+
+                    _newsResponse.postValue(response.body()?.copy(information = articles))
                 } else {
                     _errorMessage.postValue("Error: ${response.message()}")
                 }

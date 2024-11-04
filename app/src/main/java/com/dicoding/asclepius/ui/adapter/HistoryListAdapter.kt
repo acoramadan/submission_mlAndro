@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.asclepius.data.local.entity.HistoryEntity
-import com.dicoding.asclepius.data.remote.response.Information
 import com.dicoding.asclepius.databinding.HistoryListBinding
-import com.dicoding.asclepius.ui.adapter.InformationListAdapter.NewsViewHolder
 
 class HistoryListAdapter(private val application: Context, private val onItemClicked: (HistoryEntity) -> Unit) :
     ListAdapter<HistoryEntity, HistoryListAdapter.HistoryViewHolder>

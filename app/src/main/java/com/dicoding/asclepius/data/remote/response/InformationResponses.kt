@@ -18,25 +18,24 @@ data class InformationResponses (
 @Parcelize
 data class Information (
     @field:SerializedName("source")
-    val source: Source,
+    val source: Source?,
 
     @field:SerializedName("author")
-    val author: String,
+    val author: String?,
 
     @field:SerializedName("title")
-    val title: String,
+    val title: String?,
 
     @field:SerializedName("description")
-    val description: String,
+    val description: String?,
 
     @field:SerializedName("url")
-    val url: String,
-
+    val url: String?,
     @field:SerializedName("urlToImage")
-    val image: String,
+    val image: String?,
 
     @field:SerializedName("publishedAt")
-    val publish: String,
+    val publish: String?,
 
     @field:SerializedName("content")
     val content: String?
@@ -47,5 +46,5 @@ data class Source (
     @field:SerializedName("id")
     val id: String?,
     @field:SerializedName("name")
-    val name: String
+    val name: String?
 ): Parcelable

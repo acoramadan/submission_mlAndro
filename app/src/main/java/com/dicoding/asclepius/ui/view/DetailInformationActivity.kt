@@ -29,7 +29,7 @@ class DetailInformationActivity : AppCompatActivity() {
             finish()
         }
         binding.btnBaca.setOnClickListener {
-            val link: String = information.url
+            val link: String = information.url!!
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
             startActivity(intent)
         }
@@ -40,7 +40,6 @@ class DetailInformationActivity : AppCompatActivity() {
         binding.name.text = information.title
         binding.publish.text = information.publish
         binding.ownerName.text = information.author
-        binding.content.text = information.content
         binding.description.text = information.description
         Glide.with(this)
             .load(information.image)

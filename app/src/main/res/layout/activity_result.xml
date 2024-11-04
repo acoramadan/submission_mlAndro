@@ -15,6 +15,7 @@
             android:id="@+id/result_image"
             android:layout_width="match_parent"
             android:layout_height="400dp"
+            android:contentDescription="@string/gambar"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/ic_place_holder"/>
 
@@ -36,5 +37,13 @@
             android:text="@string/tambahkan_ke_riwayat"
             app:backgroundTint="@color/primaryColor"
             app:icon="@drawable/add"/>
+
+        <Button
+            android:id="@+id/kembali"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primaryColor"
+            android:text="@string/kembali"/>
     </LinearLayout>
 </ScrollView>

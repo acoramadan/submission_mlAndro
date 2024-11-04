@@ -1,7 +1,6 @@
 package com.dicoding.asclepius.ui.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.asclepius.data.remote.response.Information
 import com.dicoding.asclepius.databinding.InformationListBinding
-import com.dicoding.asclepius.ui.view.DetailInformationActivity
 
 class InformationListAdapter(private val application: Context, private val onItemClicked: (Information) -> Unit)  :
     ListAdapter<Information, InformationListAdapter.NewsViewHolder>(DIFF_CALLBACK) {

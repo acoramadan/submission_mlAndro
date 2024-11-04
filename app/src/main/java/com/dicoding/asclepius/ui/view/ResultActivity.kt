@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.dicoding.asclepius.R
 import com.dicoding.asclepius.data.local.entity.HistoryEntity
 import com.dicoding.asclepius.databinding.ActivityResultBinding
 import com.dicoding.asclepius.ui.viewmodel.HistoryViewModel
+import com.dicoding.asclepius.ui.viewmodel.factory.HistoryViewModelFactory
 
 class ResultActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResultBinding
@@ -25,9 +25,14 @@ class ResultActivity : AppCompatActivity() {
         binding.resultImage.setImageURI(imageUri)
 
         binding.resultText.text = classificationResult ?: "ERROR TIDAK ADA GAMBAR!"
+
         binding.fab.setOnClickListener{
             saveToDatabase(imageUriString,classificationResult)
         }
+        binding.kembali.setOnClickListener {
+            finish()
+        }
+
     }
     private val historyViewModel: HistoryViewModel by viewModels {
         HistoryViewModelFactory.getInstance(application)

@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.dicoding.asclepius.databinding.ActivityDetectionBinding
 import com.dicoding.asclepius.ui.viewmodel.MainViewModel
 import com.yalantis.ucrop.UCrop
@@ -29,7 +28,7 @@ class DetectionActivity : AppCompatActivity() {
         binding.galleryButton.setOnClickListener {
             startGallery()
         }
-        binding.fab.setOnClickListener{
+        binding.fab.setOnClickListener {
             finish()
         }
         binding.analyzeButton.setOnClickListener {
@@ -37,6 +36,12 @@ class DetectionActivity : AppCompatActivity() {
         }
 
         observeViewModel()
+        viewModel.imageUri.observe(this) { uri ->
+            uri?.let {
+                currentImageUri = it
+                showImage()
+            }
+        }
     }
 
     private val launchGallery = registerForActivityResult(
@@ -45,7 +50,7 @@ class DetectionActivity : AppCompatActivity() {
         if (uri != null) {
             startCrop(uri)
         } else {
-            Log.e("MainActivity", "Error Memunculkan galeri")
+            Log.e("DetectionActivity", "Error Memunculkan galeri")
         }
     }
 
@@ -54,7 +59,8 @@ class DetectionActivity : AppCompatActivity() {
     }
 
     private fun startCrop(uri: Uri) {
-        val destinationUri = Uri.fromFile(File(cacheDir, "cropped_image.jpg"))
+        val uniqueFilename = "cropped_image_${System.currentTimeMillis()}.jpg"
+        val destinationUri = Uri.fromFile(File(cacheDir, uniqueFilename))
         val options = UCrop.Options()
         options.setFreeStyleCropEnabled(true)
         options.setCompressionQuality(100)
@@ -66,13 +72,24 @@ class DetectionActivity : AppCompatActivity() {
             .start(this)
     }
 
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n     " +
+            " which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      " +
+            "contracts for common intents available in\n      " +
+            "{@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n     " +
+            " testing, and allow receiving results in separate, testable classes independent from your\n     " +
+            " activity. Use\n      " +
+            "{@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n    " +
+            "  with the appropriate {@link ActivityResultContract} and handling the result in the\n     " +
+            " {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             val resultUri = UCrop.getOutput(data!!)
-            currentImageUri = resultUri
-            showImage()
-            viewModel.setImageUri(resultUri!!)
+            if (resultUri != null) {
+                currentImageUri = resultUri
+                viewModel.setImageUri(resultUri)
+                showImage()
+            }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(data!!)
             showToast("Crop error: ${cropError?.message}")
@@ -82,6 +99,7 @@ class DetectionActivity : AppCompatActivity() {
     private fun showImage() {
         currentImageUri?.let {
             Log.d("Image URI", "showImage: $it")
+            binding.previewImageView.setImageURI(null)
             binding.previewImageView.setImageURI(it)
         }
     }
@@ -106,20 +124,20 @@ class DetectionActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.classificationResult.observe(this, Observer { result ->
+        viewModel.classificationResult.observe(this) { result ->
             binding.progressIndicator.visibility = View.GONE
             result?.let {
                 moveToResult(it)
             } ?: showToast("Gagal menganalisis gambar.")
-        })
+        }
 
-        viewModel.errorMessage.observe(this, Observer { error ->
+        viewModel.errorMessage.observe(this) { error ->
             binding.progressIndicator.visibility = View.GONE
             showToast(error)
-        })
+        }
 
-        viewModel.isLoading.observe(this, Observer { isLoading ->
+        viewModel.isLoading.observe(this) { isLoading ->
             binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
-        })
+        }
     }
 }

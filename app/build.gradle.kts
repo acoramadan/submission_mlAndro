@@ -49,14 +49,12 @@ dependencies {
     implementation("org.tensorflow:tensorflow-lite-task-vision-play-services:0.4.2")
     implementation("org.tensorflow:tensorflow-lite-gpu:2.9.0")
     implementation("androidx.activity:activity:1.9.3")
-    implementation("com.google.android.ads:mediation-test-suite:3.0.0")
-    implementation("androidx.compose.ui:ui-desktop:1.7.0")
 
     //room
-    val room_version = "2.6.1"
-    annotationProcessor("androidx.room:room-compiler:$room_version")
-    implementation("androidx.room:room-runtime:$room_version")
-    implementation("androidx.room:room-ktx:$room_version")
+    val roomVersion = "2.6.1"
+    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 
     //crop
     implementation("com.github.yalantis:ucrop:2.2.8")

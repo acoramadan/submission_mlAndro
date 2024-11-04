@@ -1,6 +1,6 @@
 package com.dicoding.asclepius.ui.view.fragments
 
-import InformationNewsViewModel
+import com.dicoding.asclepius.ui.viewmodel.InformationNewsViewModel
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.asclepius.databinding.FragmentInformationBinding
 import com.dicoding.asclepius.ui.adapter.InformationListAdapter
@@ -49,16 +48,18 @@ class InformationFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = informationAdapter
         }
-
-        viewModel.newsResponse.observe(viewLifecycleOwner, Observer { informationList ->
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+        viewModel.newsResponse.observe(viewLifecycleOwner) { informationList ->
             informationList?.let {
                 informationAdapter.submitList(it.information)
             }
-        })
+        }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { message ->
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        })
+        }
 
         viewModel.fetchCancerHealthNews("aa33e3377a004b8e972f4b2b91bd7c6a")
     }

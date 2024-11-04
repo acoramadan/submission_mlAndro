@@ -1,3 +1,5 @@
+package com.dicoding.asclepius.ui.viewmodel.factory
+
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
