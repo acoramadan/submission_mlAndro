@@ -21,7 +21,7 @@ class InformationFragment : Fragment() {
     private val viewModel: InformationNewsViewModel by viewModels()
     private lateinit var informationAdapter: InformationListAdapter
     private var position = 0
-
+    private val apiKey = "aa33e3377a004b8e972f4b2b91bd7c6a"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,12 +60,12 @@ class InformationFragment : Fragment() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
-
-        viewModel.fetchCancerHealthNews("aa33e3377a004b8e972f4b2b91bd7c6a")
+        viewModel.fetchCancerHealthNews(apiKey)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

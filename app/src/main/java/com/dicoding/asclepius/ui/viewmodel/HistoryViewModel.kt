@@ -16,5 +16,4 @@ class HistoryViewModel(private val repository: HistoryRepository) : ViewModel() 
             repository.insert(historyEntity)
         }
     }
-
 }

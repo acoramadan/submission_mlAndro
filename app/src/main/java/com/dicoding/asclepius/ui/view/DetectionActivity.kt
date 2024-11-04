@@ -16,23 +16,24 @@ import com.yalantis.ucrop.UCrop
 import java.io.File
 
 class DetectionActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetectionBinding
+    private  var binding: ActivityDetectionBinding? = null
     private val viewModel: MainViewModel by viewModels()
     private var currentImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetectionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
-        binding.galleryButton.setOnClickListener {
+        binding?.galleryButton?.setOnClickListener {
             startGallery()
         }
-        binding.fab.setOnClickListener {
+        binding?.fab?.setOnClickListener {
             finish()
         }
-        binding.analyzeButton.setOnClickListener {
+        binding?.analyzeButton?.setOnClickListener {
             analyzeImage()
+            finish()
         }
 
         observeViewModel()
@@ -92,21 +93,20 @@ class DetectionActivity : AppCompatActivity() {
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(data!!)
-            showToast("Crop error: ${cropError?.message}")
+            showToast("Gagal Mencrop Gambar: ${cropError?.message}")
         }
     }
 
     private fun showImage() {
         currentImageUri?.let {
-            Log.d("Image URI", "showImage: $it")
-            binding.previewImageView.setImageURI(null)
-            binding.previewImageView.setImageURI(it)
+            binding?.previewImageView?.setImageURI(null)
+            binding?.previewImageView?.setImageURI(it)
         }
     }
 
     private fun analyzeImage() {
         currentImageUri?.let { uri ->
-            binding.progressIndicator.visibility = View.VISIBLE
+            binding?.progressIndicator?.visibility = View.VISIBLE
             viewModel.classifyImage(uri)
         } ?: showToast("Pilih gambar terlebih dahulu.")
     }
@@ -125,19 +125,19 @@ class DetectionActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.classificationResult.observe(this) { result ->
-            binding.progressIndicator.visibility = View.GONE
+            binding?.progressIndicator?.visibility = View.GONE
             result?.let {
                 moveToResult(it)
             } ?: showToast("Gagal menganalisis gambar.")
         }
 
         viewModel.errorMessage.observe(this) { error ->
-            binding.progressIndicator.visibility = View.GONE
+            binding?.progressIndicator?.visibility = View.GONE
             showToast(error)
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
-            binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
+            binding?.progressIndicator?.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 }

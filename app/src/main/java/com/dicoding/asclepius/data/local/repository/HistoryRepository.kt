@@ -22,18 +22,4 @@ class HistoryRepository(application: Application) {
             historyDao.insert(historyEntity)
         }
     }
-
-    suspend fun delete(historyEntity: HistoryEntity) {
-        withContext(Dispatchers.IO) {
-            historyDao.delete(historyEntity)
-        }
-    }
-
-    fun mapRemoteToLocal(history: HistoryEntity): HistoryEntity {
-        return HistoryEntity(
-            id = history.id,
-            image = history.image,
-            result = history.result
-        )
-    }
 }
